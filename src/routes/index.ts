@@ -4,7 +4,7 @@ import chatRoutes from "./chat-routes.js";
 
 const appRouter = Router();
 
-appRouter.use('/user', userRoutes);
+appRouter.use('/users', userRoutes);
 appRouter.use('/chats', chatRoutes);
 
 
