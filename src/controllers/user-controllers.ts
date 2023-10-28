@@ -75,5 +75,28 @@ export const userSignup = async (
     }
   };
 
+  export const verifyUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+     const user = await ChatUser.findOne({email : res.locals.jwtData.email})
+     if(!user)
+     {
+        return res.status(401).send("User not registered OR Token Malfunctioned");
+     }
+     if(user._id.toString()!==res.locals.jwtData.id){
+        return res.status(401).send("Permissions didn't match")
+     }
+      return res
+        .status(200)
+        .json({ message: "OK", name: user.name, email: user.email });
+    } catch (error) {
+      console.log(error);
+      return res.status(404).json({ message: "ERROR", cause: error.message });
+    }
+  };
+
 
 
